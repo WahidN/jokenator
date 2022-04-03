@@ -5,10 +5,11 @@ import { createSpinner } from "nanospinner";
 const fetchJoke = async () => {
   const spinner = createSpinner("Getting joke").start();
   try {
-    const response = await axios.get(
-      "https://emojihub.herokuapp.com/api/random"
+    const {data} = await axios.get(
+      "http://jokes.guyliangilsing.me/retrieveJokes.php?type=random"
     );
-    spinner.success({ text: response });
+    const joke = data.joke;
+    spinner.success({ text: joke });
   } catch (error) {
     console.log(error);
     spinner.error({
