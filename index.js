@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 import axios from "axios";
+import "dotenv/config";
 import { createSpinner } from "nanospinner";
 
 const fetchJoke = async () => {
   const spinner = createSpinner("Getting joke").start();
   try {
-    const {data} = await axios.get(
-      "http://jokes.guyliangilsing.me/retrieveJokes.php?type=random"
-    );
-    const joke = data.joke;
+    const {data} = await axios.get("https://api.api-ninjas.com/v1/jokes", {
+      headers: {
+        "X-Api-Key": process.env.API_KEY
+      },
+    });
+    
+    const joke = data[0].joke;
     spinner.success({ text: joke });
   } catch (error) {
     console.log(error);
